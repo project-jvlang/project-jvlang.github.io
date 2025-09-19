@@ -1,5 +1,8 @@
 # jv言語仕様
 
+[English](en/language-spec.md) | **日本語**
+
+
 jv（Java Sugar Language）プログラミング言語の正式仕様です。
 
 ## 目次
