@@ -1,4 +1,4 @@
-# jv [jawa] - シンタックスシュガー
+# jv [/jawa/] - シンタックスシュガー
 
 [English](en/index.md) | **日本語**
 

@@ -1,4 +1,4 @@
-# jv [jawa] - Java Syntactic Sugar
+# jv [/jawa/] - Java Syntactic Sugar
 
 **English** | [日本語](../index.md)
 
