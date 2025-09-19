@@ -1,5 +1,5 @@
 site_name: jv [jawa] - Java Syntactic Sugar
-site_description: jv言語（やわ-らんぐ）は、読みやすいJava 25ソースコードにコンパイルされるJava Syntactic Sugar
+site_description: jv言語（やわ-らんぐ）は、読みやすいJava 25ソースコードにコンパイルされるシンタックスシュガー
 site_url: https://project-jvlang.github.io/
 repo_url: https://github.com/project-jvlang/jv-lang
 repo_name: project-jvlang/jv-lang
