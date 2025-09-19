@@ -36,15 +36,6 @@ plugins:
       lang:
         - ja
         - en
-  - i18n:
-      default_language: ja
-      languages:
-        ja:
-          name: 日本語
-          build: true
-        en:
-          name: English
-          build: true
 
 nav:
   - ホーム: index.md
