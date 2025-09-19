@@ -1,8 +1,8 @@
-# jv [jawa] - Java Sugar Language
+# jv [jawa] - Java Syntactic Sugar
 
 [English](en/index.md) | **日本語**
 
-**jv** 言語（**やわ-らんぐ**）は、読みやすいJava 25ソースコードにコンパイルされるJava Sugar Languageです。Kotlinスタイルのシンタックスシュガーを提供しながら、ランタイム依存関係ゼロで完全なJVM互換性を維持します。
+**jv** 言語（**やわ-らんぐ**）は、読みやすいJava 25ソースコードにコンパイルされるJava Syntactic Sugarです。Kotlinスタイルのシンタックスシュガーを提供しながら、ランタイム依存関係ゼロで完全なJVM互換性を維持します。
 
 ## 概要
 
