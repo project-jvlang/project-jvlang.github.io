@@ -7,6 +7,8 @@ repo_name: project-jvlang/jv-lang
 theme:
   name: material
   language: ja
+  logo: 柔.png
+  favicon: 柔.png
   palette:
     - scheme: default
       primary: indigo
