@@ -1,4 +1,4 @@
-# jv - Java Sugar Language
+# jv [jawa] - Java Sugar Language
 
 **English** | [日本語](../index.md)
 
