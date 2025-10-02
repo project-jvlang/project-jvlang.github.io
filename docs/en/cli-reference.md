@@ -299,7 +299,7 @@ jv version [OPTIONS]
 ```bash
 # Show basic version
 jv version
-# Output: jv 0.1.0 - Java Sugar Language compiler
+# Output: jv 0.1.0 - Java Syntactic Sugar compiler
 
 # Show detailed version information
 jv version --verbose
@@ -312,6 +312,226 @@ jv version --verbose
 
 # JSON output
 jv version --json
+```
+
+### `jv add`
+
+Add dependencies to your project.
+
+```bash
+jv add [OPTIONS] <PACKAGE>
+```
+
+**Options:**
+- `--dev`: Add as development-only dependency
+- `--optional`: Add as optional dependency
+- `--registry <URL>`: Fetch from specific registry
+- `--version <VERSION>`: Specify a particular version
+
+**Examples:**
+```bash
+# Add from jv registry
+jv add math-utils
+
+# Specify version
+jv add math-utils --version 1.2.0
+
+# Add Maven dependency
+jv add org.apache.commons:commons-lang3:3.12.0
+
+# Add as development dependency
+jv add junit --dev
+```
+
+### `jv toolchain`
+
+JDK management commands.
+
+```bash
+jv toolchain <SUBCOMMAND>
+```
+
+**Subcommands:**
+- `list`: List available JDKs
+- `install <JDK>`: Install specified JDK
+- `uninstall <JDK>`: Uninstall a JDK
+- `default <JDK>`: Set default JDK
+
+**Examples:**
+```bash
+# Show available JDKs
+jv toolchain list
+
+# Install Java 25
+jv toolchain install 25-temurin
+
+# Install GraalVM
+jv toolchain install 25-graalvm
+
+# Set default JDK
+jv toolchain default 25-temurin
+
+# Uninstall a JDK
+jv toolchain uninstall 21-temurin
+```
+
+### `jv db`
+
+Local database management commands.
+
+```bash
+jv db <SUBCOMMAND> [OPTIONS]
+```
+
+**Subcommands:**
+- `init <TYPE>`: Initialize database (sqlite, duckdb)
+- `migrate`: Execute schema migrations
+- `seed`: Insert test data
+- `analyze <FORMAT>`: Analyze data (json, csv, parquet)
+
+**Examples:**
+```bash
+# Initialize SQLite database
+jv db init sqlite --file app.db
+
+# Initialize DuckDB database
+jv db init duckdb --file analytics.duckdb
+
+# Run migrations
+jv db migrate --target latest
+
+# Insert test data
+jv db seed --file seeds/users.sql
+
+# Analyze data (CSV output)
+jv db analyze csv --query "SELECT * FROM users" > report.csv
+```
+
+### `jv dsl`
+
+DSL management commands.
+
+```bash
+jv dsl <SUBCOMMAND> [OPTIONS]
+```
+
+**Subcommands:**
+- `list`: List available DSL handlers
+- `doctor`: Validate DSL configuration
+- `register <HANDLER>`: Register new DSL handler
+
+**Examples:**
+```bash
+# Show available DSL handlers
+jv dsl list
+
+# Validate DSL configuration
+jv dsl doctor
+
+# Register custom DSL handler
+jv dsl register --name custom-sql --handler com.example.CustomSqlHandler
+```
+
+### `jv native`
+
+Native function binding management.
+
+```bash
+jv native <SUBCOMMAND> [OPTIONS]
+```
+
+**Subcommands:**
+- `resolve <SYMBOL>`: Check native symbol availability
+- `headers`: Generate JNI header files
+- `test <LIBRARY>`: Test native library
+
+**Examples:**
+```bash
+# Check native symbol
+jv native resolve calculate_fast --library libmath.so
+
+# Generate JNI header files
+jv native headers --output include/
+
+# Test native library
+jv native test libmath.so
+```
+
+### `jv audit`
+
+Security audit commands.
+
+```bash
+jv audit [OPTIONS]
+```
+
+**Options:**
+- `--fix`: Automatically fix fixable vulnerabilities
+- `--format <FORMAT>`: Output format (json, table, csv)
+- `--severity <LEVEL>`: Minimum severity level
+
+**Examples:**
+```bash
+# Basic security audit
+jv audit
+
+# Auto-fix vulnerabilities
+jv audit --fix
+
+# Detailed report in JSON format
+jv audit --format json > security-report.json
+
+# Show only high severity
+jv audit --severity high
+```
+
+### `jv publish`
+
+Publish package to jv registry.
+
+```bash
+jv publish [OPTIONS]
+```
+
+**Options:**
+- `--registry <URL>`: Specify registry to publish to
+- `--token <TOKEN>`: Authentication token
+- `--dry-run`: Test without actually publishing
+
+**Examples:**
+```bash
+# Publish package
+jv publish
+
+# Dry run
+jv publish --dry-run
+
+# Publish to specific registry
+jv publish --registry https://custom-registry.example.com
+```
+
+### `jv doctor`
+
+Environment diagnostics commands.
+
+```bash
+jv doctor [OPTIONS]
+```
+
+**Options:**
+- `--fix`: Automatically fix fixable issues
+- `--verbose`: Show detailed diagnostic information
+
+**Examples:**
+```bash
+# Basic environment diagnostics
+jv doctor
+
+# Auto-fix issues
+jv doctor --fix
+
+# Detailed diagnostics
+jv doctor --verbose
 ```
 
 ## Configuration

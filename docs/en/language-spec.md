@@ -3,7 +3,7 @@
 
 **English** | [日本語](../language-spec.md)
 
-Formal specification for the jv (Java Sugar Language) programming language.
+Formal specification for the jv [/jawa/] (Java Syntactic Sugar) programming language.
 
 ## Table of Contents
 
@@ -17,15 +17,20 @@ Formal specification for the jv (Java Sugar Language) programming language.
 
 ## Overview
 
-jv is a statically typed programming language that compiles to readable Java 25 source code. It provides modern syntax while maintaining full compatibility with the Java ecosystem.
+jv [/jawa/] is a statically typed programming language that compiles to readable Java 25 source code. It provides mathematical computation, DSL embedding, and unified paradigms while maintaining full compatibility with the Java ecosystem.
 
 ### Design Goals
 
-1. **Zero Runtime Overhead**: Compiles to pure Java with no additional runtime
-2. **Java Ecosystem Compatibility**: Seamless integration with Java libraries
-3. **Modern Syntax**: Kotlin-inspired syntax improvements
-4. **Type Safety**: Enhanced null safety and type inference
-5. **Readability**: Generated Java code should be human-readable
+1. **Zero Magic**: Readable Java conversion - no hidden runtime
+2. **Static Types Only**: Compile-time verification, no dynamic dispatch
+3. **Java 25 Native**: Leverages records, pattern matching, virtual threads
+4. **Java 21 Compatible**: Fallback output for major framework support
+5. **Zero Dependencies**: Output requires only Java LTS
+6. **Math-Focused**: Julia-style numeric types and dimensional analysis
+7. **Ergonomic Syntax**: Whitespace-separated arrays, context-aware parsing
+8. **Unified Paradigm**: Conditional unification with when expressions, loop unification with for statements
+9. **3rd Generation Syntax Sugar**: Modern expressiveness centered on pattern matching
+10. **DSL Embedding & Native Integration**: Type-safe domain-specific language support
 
 ### Compilation Model
 
@@ -66,9 +71,9 @@ digit      ::= '0'..'9'
 **Reserved Words:**
 ```
 abstract, async, await, break, class, continue, data, defer, do, else,
-enum, false, final, for, fun, if, import, in, interface, is, null,
+enum, false, final, for, fun, import, in, interface, is, null,
 object, override, package, private, protected, public, return, spawn,
-super, this, throw, true, try, use, val, var, when, while
+super, this, throw, true, try, use, val, var, when
 ```
 
 ### Literals
@@ -104,6 +109,197 @@ Examples:
 1e-5
 ```
 
+#### Extended Numeric Literals
+
+**BigInt Literals:**
+```jv
+123456789123456789n  // BigInt
+1_000_000_000_000n   // Underscore separators
+```
+
+**BigDecimal Literals:**
+```jv
+123.456789123456789d  // BigDecimal
+3.141592653589793238d  // High-precision pi
+```
+
+**Complex Number Literals:**
+```jv
+3 + 4im      // Complex number (real 3, imaginary 4)
+5im          // Pure imaginary
+-2 + 3im     // Negative real part
+```
+
+**Rational Number Literals:**
+```jv
+1//3         // Rational number (1/3)
+22//7        // Pi approximation
+-3//4        // Negative rational
+```
+
+#### Dimensional Numeric Literals
+
+**Physical Unit Literals:**
+```jv
+100m         // Length (meters)
+2s           // Time (seconds)
+5kg          // Mass (kilograms)
+9.8m/s²      // Acceleration
+```
+
+**Dimensional Analysis Examples:**
+```jv
+val distance = 100m
+val time = 2s
+val velocity = distance / time    // → 50m/s (automatic unit inference)
+val acceleration = 9.8m/s²
+val force = 5kg * acceleration    // → 49N (Newtons)
+```
+
+### Universal Unit System
+
+jv provides a unified unit system for numeric values, currencies, dates, and character encodings.
+
+#### Unit Syntax
+
+**Basic Unit Literals:**
+```jv
+// Numeric units
+val distance = 100m              // Meters
+val temperature = 25C            // Celsius
+val money = 100USD              // US Dollars
+val file = "data.txt"@UTF8      // UTF-8 encoding
+val date = 2024@Japanese        // Japanese calendar
+```
+
+**Type Annotation with Units:**
+```jv
+val length: Int@m = 100         // Integer in meters
+val price: BigDecimal@USD = 99.99  // BigDecimal in USD
+val temp: Double@C = 25.5       // Double in Celsius
+```
+
+#### Custom Unit Definitions
+
+**Numeric Units (`@Numeric`):**
+```jv
+@Numeric("m", dimension = "Length")
+@Numeric("kg", dimension = "Mass")
+@Numeric("s", dimension = "Time")
+@Numeric("C", dimension = "Temperature", offset = 273.15)
+@Numeric("F", dimension = "Temperature", offset = 459.67, scale = 5.0/9.0)
+```
+
+**Currency Units (`@Currency`):**
+```jv
+@Currency("USD", symbol = "$")
+@Currency("EUR", symbol = "€")
+@Currency("JPY", symbol = "¥", decimals = 0)
+```
+
+**Character Encoding (`@Encoding`):**
+```jv
+@Encoding("UTF8")
+@Encoding("UTF16")
+@Encoding("ShiftJIS")
+```
+
+**Calendar Systems (`@Calendar`):**
+```jv
+@Calendar("Gregorian")
+@Calendar("Japanese")
+@Calendar("Islamic")
+```
+
+**Time Zones (`@Timezone`):**
+```jv
+@Timezone("JST", offset = "+09:00")
+@Timezone("UTC", offset = "+00:00")
+@Timezone("PST", offset = "-08:00")
+```
+
+#### Unit Conversion
+
+**Explicit Conversion Syntax:**
+```jv
+val jpy = 10000JPY
+val usd = jpy as USD           // Apply exchange rate
+val eur = jpy as EUR           // JPY → EUR conversion
+
+val celsius = 25C
+val fahrenheit = celsius as F   // 25C → 77F
+val kelvin = celsius as K       // 25C → 298.15K
+```
+
+**Type Promotion with Unit Conversion:**
+```jv
+val intJpy: Int@JPY = 10000
+val doubleUsd: Double = intJpy as USD  // Int@JPY → Double@USD
+```
+
+#### Property Access and Destructuring
+
+**Date Properties:**
+```jv
+val japaneseDate = 2024@Japanese
+val era = japaneseDate.era       // "Reiwa"
+val year = japaneseDate.year     // 6
+val month = japaneseDate.month   // (current month)
+val day = japaneseDate.day       // (current day)
+```
+
+**Destructuring Assignment:**
+```jv
+val date = 2024@Japanese
+val [era, year, month, day] = date
+
+val money = 100USD
+val [amount, currency] = money  // amount=100, currency="USD"
+```
+
+#### Examples by Unit Category
+
+**Numeric Units:**
+```jv
+val height = 180cm
+val weight = 75kg
+val speed = 60km/h
+val temp = 98.6F
+```
+
+**Currency Units:**
+```jv
+val price = 1999USD
+val tax = price * 0.1           // Unit preserved: 199.9USD
+val total = price + tax         // 2198.9USD
+val priceInEur = price as EUR   // Currency conversion
+```
+
+**Encoding Units:**
+```jv
+val utf8Text = "こんにちは"@UTF8
+val sjisText = utf8Text as ShiftJIS
+val utf16Text = utf8Text as UTF16
+```
+
+**Calendar Units:**
+```jv
+val gregorian = 2024@Gregorian
+val japanese = gregorian as Japanese  // Reiwa 6
+val islamic = gregorian as Islamic    // Hijri calendar conversion
+
+val [era, year] = japanese  // ["Reiwa", 6]
+```
+
+**Timezone Units:**
+```jv
+val jstTime = LocalTime.now()@JST
+val utcTime = jstTime as UTC
+val pstTime = jstTime as PST
+
+val offset = jstTime.offset  // "+09:00"
+```
+
 #### Boolean Literals
 
 ```jv
@@ -115,6 +311,144 @@ false
 
 ```jv
 null
+```
+
+#### Array Literals
+
+**Whitespace-Separated Arrays:**
+```jv
+[1 2 3 4 5]              // Whitespace-separated array
+[1.0 2.0 3.0]            // Floating-point array
+["apple" "banana" "cherry"]  // String array
+
+// Matrix notation
+val matrix = [
+    1 2 3
+    4 5 6
+    7 8 9
+]
+```
+
+**Auto-Expanding Sequences:**
+```jv
+[1 2 .. 10]              // [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
+[1 3 .. 10]              // [1, 3, 5, 7, 9] (step 2)
+["Jan" .. "Dec"]         // Month name generation
+['a' .. 'z']             // Alphabet array
+```
+
+#### JSON Literals
+
+jv supports JSON with Comments (JSONC) and automatically generates POJOs.
+
+**JSON with Comments (JSONC):**
+```jv
+// Automatically infer types from JSON structure
+val config = {
+  "server": {
+    "port": 8080,          // Port number
+    "host": "localhost",   // Host name
+    /*
+     * Authentication configuration
+     * Multi-line comments supported
+     */
+    "auth": {
+      "type": "jwt",       // JWT authentication
+      "secret": "${SECRET}" // Environment variable expansion
+    }
+  }
+}
+
+// Auto-generated types (internal):
+// data class Config(
+//   val server: Server
+// )
+// data class Server(
+//   val port: Int,
+//   val host: String,
+//   val auth: Auth
+// )
+// data class Auth(
+//   val type: String,
+//   val secret: String
+// )
+
+// Type-safe access
+val port = config.server.port        // Int type
+val authType = config.server.auth.type  // String type
+```
+
+**Automatic POJO Generation:**
+```jv
+// Automatically generate data classes from JSON structure
+val user = {
+  "id": 1,
+  "name": "Alice",
+  "email": "alice@example.com",
+  "age": 30,
+  "active": true
+}
+
+// Generated type:
+// data class User(
+//   val id: Int,
+//   val name: String,
+//   val email: String,
+//   val age: Int,
+//   val active: Boolean
+// )
+
+// Type-safe access via type inference
+val name: String = user.name
+val age: Int = user.age
+val isActive: Boolean = user.active
+```
+
+**Nested JSON Structures:**
+```jv
+val company = {
+  "name": "Tech Corp",
+  "employees": [
+    {
+      "name": "Alice",
+      "role": "Engineer",
+      "skills": ["Java", "Kotlin", "jv"]
+    },
+    {
+      "name": "Bob",
+      "role": "Designer",
+      "skills": ["Figma", "Photoshop"]
+    }
+  ],
+  "founded": 2020
+}
+
+// Arrays and nested structures supported
+val firstEmployee = company.employees[0]
+val skills = firstEmployee.skills  // List<String>
+```
+
+#### DSL Embedding Literals
+
+**Type-Safe SQL:**
+```jv
+val query = ```sql
+    SELECT name, age FROM users
+    WHERE age > ${minAge}
+    ORDER BY name
+```
+
+**Business Rules (Drools):**
+```jv
+val rules = ```drools
+rule "Premium Customer Discount"
+when
+    $customer: Customer(membershipLevel == "PREMIUM")
+    $order: Order(customerId == $customer.id, amount > 1000)
+then
+    $order.setDiscount(0.15);
+    update($order);
+end
 ```
 
 #### String Literals
@@ -181,12 +515,18 @@ val message = "Hello, $name! You are ${age + 1} years old."
 
 **Range Operators:**
 ```
-..  ..<
+..   (exclusive range: [start, end))
+..=  (inclusive range: [start, end])
+```
+
+**Destructuring Assignment Operators:**
+```
+[...]  (array destructuring)
 ```
 
 **Other Operators:**
 ```
-::  ->  =>
+::  ->  =>  @
 ```
 
 **Punctuation:**
@@ -259,6 +599,38 @@ property_accessors ::= getter setter?
 
 getter ::= 'get' function_body?
 setter ::= 'set' '(' parameter ')' function_body?
+```
+
+#### Destructuring Assignment
+
+Destructuring assignment allows extracting multiple values from arrays and data classes at once.
+
+```jv
+// Array destructuring
+val user = ["Alice", 30, "alice@example.com"]
+val [name, age] = user  // name="Alice", age=30
+
+// Partial destructuring
+val [name] = user  // Get only the first element
+
+// Nested destructuring
+val person = [
+    "Bob",
+    ["Tokyo", "Japan"]
+]
+val [name, [city, country]] = person
+
+// Data class destructuring
+data class User(val name: String, val age: Int, val email: String)
+val user = User("Alice", 30, "alice@example.com")
+val [name, age, email] = user
+
+// Unit value destructuring
+val money = 100USD
+val [amount, currency] = money  // amount=100, currency="USD"
+
+val date = 2024@Japanese
+val [era, year, month, day] = date
 ```
 
 ### Types
@@ -667,6 +1039,26 @@ public void processData() {
 - `Char`: Unicode character
 - `String`: Unicode string
 
+#### Extended Numeric Types
+
+| jv Type | Java Type | Description | Example |
+|---------|-----------|-------------|---------|
+| `BigInt` | `BigInteger` | Arbitrary precision integer | `123456789123456789n` |
+| `BigDecimal` | `BigDecimal` | Arbitrary precision decimal | `3.141592653589793d` |
+| `Complex<T>` | `Complex<T>` | Complex number | `3 + 4im` |
+| `Rational<T>` | `Rational<T>` | Rational number | `1//3` |
+
+#### Dimensional Analysis Types
+
+| jv Type | Java Type | Description | Example |
+|---------|-----------|-------------|---------|
+| `Meters` | `Quantity<Length>` | Length (meters) | `100m` |
+| `Seconds` | `Quantity<Time>` | Time (seconds) | `2s` |
+| `Kilograms` | `Quantity<Mass>` | Mass (kilograms) | `5kg` |
+| `MetersPerSecond` | `Quantity<Velocity>` | Velocity | `50m/s` |
+| `MetersPerSecondSquared` | `Quantity<Acceleration>` | Acceleration | `9.8m/s²` |
+| `Newtons` | `Quantity<Force>` | Force (Newtons) | `49N` |
+
 #### Collection Types
 - `Array<T>`: Fixed-size array
 - `List<T>`: Ordered collection
@@ -707,6 +1099,255 @@ str.split(",")                    // Split into list
 ```jv
 typealias UserId = String
 typealias Handler<T> = (T) -> Unit
+```
+
+## DSL Embedding & Native Integration
+
+### DSL Embedding System
+
+jv supports type-safe DSL embedding, generating appropriate Java code at compile time.
+
+#### SQL Embedding
+
+```jv
+// Type-safe SQL
+val query = ```sql
+    SELECT u.name, u.age, p.title
+    FROM users u
+    JOIN profiles p ON u.id = p.user_id
+    WHERE u.age > ${minAge}
+    ORDER BY u.name
+```
+
+**Generated Java:**
+```java
+String query = """
+    SELECT u.name, u.age, p.title
+    FROM users u
+    JOIN profiles p ON u.id = p.user_id
+    WHERE u.age > ?
+    ORDER BY u.name
+    """;
+// Parameter binding code also generated
+```
+
+#### Reasoning Engine Integration
+
+**Drools Rules:**
+```jv
+val businessRules = ```drools
+rule "VIP Customer Processing"
+when
+    $customer: Customer(vipStatus == true, orderCount > 10)
+    $order: Order(customerId == $customer.id, totalAmount > 500.0)
+then
+    $order.applyVipDiscount(0.2);
+    $order.setPriorityShipping(true);
+    update($order);
+end
+```
+
+**DMN Decision Tables:**
+```jv
+val decisionTable = ```dmn
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns="https://www.omg.org/spec/DMN/20191111/MODEL/"
+             namespace="com.example.pricing">
+  <decision id="pricing" name="Product Pricing">
+    <decisionTable>
+      <input id="category" label="Product Category">
+        <inputExpression typeRef="string">
+          <text>productCategory</text>
+        </inputExpression>
+      </input>
+      <!-- Decision logic -->
+    </decisionTable>
+  </decision>
+</definitions>
+```
+
+### Native Function Binding
+
+**FFM (Foreign Function & Memory) Integration:**
+```jv
+// Native library binding
+native fun calculateFast(data: FloatArray): Double {
+    library = "libmath.so"
+    symbol = "calculate_fast"
+}
+
+// Usage example
+val result = calculateFast(floatArrayOf(1.0f, 2.0f, 3.0f))
+```
+
+**Generated Java:**
+```java
+private static final MethodHandle calculateFastHandle =
+    Linker.nativeLinker()
+          .downcallHandle(
+              SymbolLookup.loaderLookup().find("calculate_fast").get(),
+              FunctionDescriptor.of(ValueLayout.JAVA_DOUBLE,
+                                   ValueLayout.ADDRESS));
+
+public static double calculateFast(float[] data) {
+    try (Arena arena = Arena.ofConfined()) {
+        MemorySegment segment = arena.allocateFrom(ValueLayout.JAVA_FLOAT, data);
+        return (double) calculateFastHandle.invokeExact(segment);
+    }
+}
+```
+
+### Local Database Integration
+
+**SQLite Integration:**
+```jv
+// Direct SQLite database queries
+val users = sqlite("app.db") ```sql
+    SELECT * FROM users WHERE active = true
+```
+
+**DuckDB Integration:**
+```jv
+// Analytics queries (DuckDB)
+val analytics = duckdb(":memory:") ```sql
+    SELECT
+        date_trunc('month', created_at) as month,
+        count(*) as user_count
+    FROM users
+    GROUP BY month
+    ORDER BY month
+```
+
+### Data Analysis Features
+
+jv provides powerful features for data analysis.
+
+#### DataFrame Operations
+
+**Pipeline Notation:**
+```jv
+// Create DataFrame from CSV
+val df = DataFrame.readCsv("data.csv")
+
+// Data transformation with pipeline notation
+val result = df
+    |> filter { it["age"] > 18 }
+    |> select("name", "age", "city")
+    |> groupBy("city")
+    |> aggregate {
+        count("name") as "count"
+        avg("age") as "avg_age"
+    }
+    |> sortBy("count", descending = true)
+
+// Method chain notation
+val result2 = df
+    .filter { it["age"] > 18 }
+    .select("name", "age", "city")
+    .groupBy("city")
+    .aggregate {
+        count("name") as "count"
+        avg("age") as "avg_age"
+    }
+    .sortBy("count", descending = true)
+```
+
+#### SQL DSL Integration
+
+**Type-Safe SQL DSL:**
+```jv
+// SQL DSL queries
+val users = select {
+    from(User)
+    where { User.age gt 18 }
+    orderBy(User.name.asc())
+}
+
+// JOIN queries
+val result = select {
+    from(User)
+    join(Profile) { User.id eq Profile.userId }
+    where {
+        (User.age gt 18) and (Profile.verified eq true)
+    }
+    select(User.name, Profile.bio)
+}
+
+// Subqueries
+val activeUsers = select {
+    from(User)
+    where {
+        User.id inList {
+            select(Order.userId)
+            from(Order)
+            where { Order.status eq "active" }
+        }
+    }
+}
+```
+
+#### Entity Framework-Style Mapping
+
+**Entity Definitions:**
+```jv
+// Entity classes
+@Entity
+data class User(
+    @Id val id: Long,
+    val name: String,
+    val age: Int,
+    @OneToMany val orders: List<Order>
+)
+
+@Entity
+data class Order(
+    @Id val id: Long,
+    @ManyToOne val user: User,
+    val amount: BigDecimal@USD,
+    val status: String
+)
+
+// LINQ-style queries
+val vipUsers = db.users
+    .where { it.orders.count() > 10 }
+    .select { User(it.id, it.name, it.age, it.orders) }
+    .toList()
+
+// Navigation properties
+val userOrders = user.orders
+    .where { it.amount > 100USD }
+    .orderBy { it.createdAt }
+    .toList()
+```
+
+**Aggregation and Grouping:**
+```jv
+// Sales aggregation
+val monthlySales = db.orders
+    .groupBy { it.createdAt.month }
+    .select { group ->
+        MonthlyReport(
+            month = group.key,
+            totalSales = group.sum { it.amount },
+            orderCount = group.count(),
+            avgOrderValue = group.average { it.amount }
+        )
+    }
+    .orderBy { it.month }
+    .toList()
+
+// Multi-column grouping
+val salesByRegion = db.orders
+    .join(db.users) { order, user -> order.userId eq user.id }
+    .groupBy { (order, user) -> user.region }
+    .select { group ->
+        RegionReport(
+            region = group.key,
+            totalSales = group.sum { it.first.amount },
+            customerCount = group.distinctBy { it.second.id }.count()
+        )
+    }
+    .toList()
 ```
 
 ## Java Interoperability

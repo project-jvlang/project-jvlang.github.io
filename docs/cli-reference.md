@@ -300,7 +300,7 @@ jv version [OPTIONS]
 ```bash
 # 基本バージョンを表示
 jv version
-# 出力: jv 0.1.0 - Java Sugar Language compiler
+# 出力: jv 0.1.0 - Java Syntactic Sugar compiler
 
 # 詳細なバージョン情報を表示
 jv version --verbose
@@ -313,6 +313,226 @@ jv version --verbose
 
 # JSON出力
 jv version --json
+```
+
+### `jv add`
+
+プロジェクトに依存関係を追加します。
+
+```bash
+jv add [OPTIONS] <PACKAGE>
+```
+
+**オプション:**
+- `--dev`: 開発時のみの依存関係として追加
+- `--optional`: オプション依存関係として追加
+- `--registry <URL>`: 特定のレジストリから取得
+- `--version <VERSION>`: 特定のバージョンを指定
+
+**例:**
+```bash
+# jvレジストリから追加
+jv add math-utils
+
+# 特定のバージョンを指定
+jv add math-utils --version 1.2.0
+
+# Maven依存関係を追加
+jv add org.apache.commons:commons-lang3:3.12.0
+
+# 開発依存関係として追加
+jv add junit --dev
+```
+
+### `jv toolchain`
+
+JDK管理コマンド。
+
+```bash
+jv toolchain <SUBCOMMAND>
+```
+
+**サブコマンド:**
+- `list`: 利用可能なJDKを一覧表示
+- `install <JDK>`: 指定されたJDKをインストール
+- `uninstall <JDK>`: JDKをアンインストール
+- `default <JDK>`: デフォルトJDKを設定
+
+**例:**
+```bash
+# 利用可能なJDKを表示
+jv toolchain list
+
+# Java 25をインストール
+jv toolchain install 25-temurin
+
+# GraalVMをインストール
+jv toolchain install 25-graalvm
+
+# デフォルトJDKを設定
+jv toolchain default 25-temurin
+
+# JDKをアンインストール
+jv toolchain uninstall 21-temurin
+```
+
+### `jv db`
+
+ローカルデータベース管理コマンド。
+
+```bash
+jv db <SUBCOMMAND> [OPTIONS]
+```
+
+**サブコマンド:**
+- `init <TYPE>`: データベースを初期化（sqlite, duckdb）
+- `migrate`: スキーママイグレーションを実行
+- `seed`: テストデータを挿入
+- `analyze <FORMAT>`: データ分析（json, csv, parquet）
+
+**例:**
+```bash
+# SQLiteデータベースを初期化
+jv db init sqlite --file app.db
+
+# DuckDBデータベースを初期化
+jv db init duckdb --file analytics.duckdb
+
+# マイグレーションを実行
+jv db migrate --target latest
+
+# テストデータを挿入
+jv db seed --file seeds/users.sql
+
+# データ分析（CSV出力）
+jv db analyze csv --query "SELECT * FROM users" > report.csv
+```
+
+### `jv dsl`
+
+DSL管理コマンド。
+
+```bash
+jv dsl <SUBCOMMAND> [OPTIONS]
+```
+
+**サブコマンド:**
+- `list`: 利用可能なDSLハンドラを一覧表示
+- `doctor`: DSL設定を検証
+- `register <HANDLER>`: 新しいDSLハンドラを登録
+
+**例:**
+```bash
+# 利用可能なDSLハンドラを表示
+jv dsl list
+
+# DSL設定を検証
+jv dsl doctor
+
+# カスタムDSLハンドラを登録
+jv dsl register --name custom-sql --handler com.example.CustomSqlHandler
+```
+
+### `jv native`
+
+ネイティブ関数バインディング管理。
+
+```bash
+jv native <SUBCOMMAND> [OPTIONS]
+```
+
+**サブコマンド:**
+- `resolve <SYMBOL>`: ネイティブシンボルの可用性をチェック
+- `headers`: JNIヘッダーファイルを生成
+- `test <LIBRARY>`: ネイティブライブラリのテスト
+
+**例:**
+```bash
+# ネイティブシンボルをチェック
+jv native resolve calculate_fast --library libmath.so
+
+# JNIヘッダーファイルを生成
+jv native headers --output include/
+
+# ネイティブライブラリをテスト
+jv native test libmath.so
+```
+
+### `jv audit`
+
+セキュリティ監査コマンド。
+
+```bash
+jv audit [OPTIONS]
+```
+
+**オプション:**
+- `--fix`: 修正可能な脆弱性を自動修正
+- `--format <FORMAT>`: 出力形式（json, table, csv）
+- `--severity <LEVEL>`: 最小深刻度レベル
+
+**例:**
+```bash
+# 基本的なセキュリティ監査
+jv audit
+
+# 脆弱性を自動修正
+jv audit --fix
+
+# JSON形式で詳細レポート
+jv audit --format json > security-report.json
+
+# 高深刻度のみ表示
+jv audit --severity high
+```
+
+### `jv publish`
+
+jvレジストリにパッケージを公開します。
+
+```bash
+jv publish [OPTIONS]
+```
+
+**オプション:**
+- `--registry <URL>`: 公開先レジストリを指定
+- `--token <TOKEN>`: 認証トークン
+- `--dry-run`: 実際の公開を行わずにテスト
+
+**例:**
+```bash
+# パッケージを公開
+jv publish
+
+# ドライラン
+jv publish --dry-run
+
+# 特定のレジストリに公開
+jv publish --registry https://custom-registry.example.com
+```
+
+### `jv doctor`
+
+環境診断コマンド。
+
+```bash
+jv doctor [OPTIONS]
+```
+
+**オプション:**
+- `--fix`: 修正可能な問題を自動修正
+- `--verbose`: 詳細な診断情報を表示
+
+**例:**
+```bash
+# 基本的な環境診断
+jv doctor
+
+# 問題を自動修正
+jv doctor --fix
+
+# 詳細診断
+jv doctor --verbose
 ```
 
 ## 設定
