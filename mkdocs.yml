@@ -53,6 +53,15 @@ nav:
     - プロジェクト構造: project-structure.md
     - CLIリファレンス: cli-reference.md
     - サンプル注釈: sample-annotation.md
+  - 開発ロードマップ:
+    - 概要: roadmap/index.md
+    - Phase 1 - コア言語基盤: roadmap/phase1.md
+    - Phase 2 - 型システム: roadmap/phase2.md
+    - Phase 3 - 数学型システム: roadmap/phase3.md
+    - Phase 4 - 標準ライブラリ: roadmap/phase4.md
+    - Phase 5 - 開発ツールチェーン: roadmap/phase5.md
+    - Phase 6 - エコシステム拡張: roadmap/phase6.md
+    - Phase 7 - 高度な最適化: roadmap/phase7.md
   - コントリビューション:
     - 貢献ガイド: contributing.md
 
