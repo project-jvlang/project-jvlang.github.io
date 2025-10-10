@@ -4,6 +4,11 @@
 
 **jv** 言語（**やわ-らんぐ**）[/jawa/] は、可読なJavaソースコードにトランスパイルする**Java糖衣言語（Java Syntactic Sugar）**です。Java 25をメインターゲットとし、Java 21互換サポートにより、**ゼロランタイム依存・ゼロマジック**でJVMとの完全互換性を実現します。
 
+!!! tip "開発進捗状況"
+    🟢 **Phase 1-2 完了** | 🟡 **Phase 3 進行中** (v0.1 Alpha: 2025年10月末予定)
+
+    [開発ロードマップを見る](roadmap/index.md){ .md-button .md-button--primary }
+
 ## Pure Java Syntactic Sugarの哲学
 
 ### 🎯 **Pure（純粋性）**
