@@ -4,6 +4,8 @@
 
 **jv** (pronounced /jawa/, jv-lang is pronounced /jawa læŋ/) is a **Java Syntactic Sugar** that transpiles to readable Java source code. Targeting Java 25 as the main platform with Java 21 compatible support, it achieves **zero runtime dependencies and zero magic** with full JVM compatibility.
 
+[💻 GitHub](https://github.com/project-jvlang) | [❤️ GitHub Sponsors](https://github.com/sponsors/asopitech)
+
 !!! tip "Development Progress"
     🟢 **Phase 1-2 Complete** | 🟡 **Phase 3 In Progress** (v0.1 Alpha: Late Oct 2025)
 

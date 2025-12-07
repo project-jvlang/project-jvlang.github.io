@@ -4,6 +4,8 @@
 
 **jv** 言語（**やわ-らんぐ**）[/jawa/] は、可読なJavaソースコードにトランスパイルする**Java糖衣言語（Java Syntactic Sugar）**です。Java 25をメインターゲットとし、Java 21互換サポートにより、**ゼロランタイム依存・ゼロマジック**でJVMとの完全互換性を実現します。
 
+[💻 GitHub](https://github.com/project-jvlang) | [❤️ GitHub Sponsors](https://github.com/sponsors/asopitech)
+
 !!! tip "開発進捗状況"
     🟢 **Phase 1-2 完了** | 🟡 **Phase 3 進行中** (v0.1 Alpha: 2025年10月末予定)
 
