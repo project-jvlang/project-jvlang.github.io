@@ -9,6 +9,7 @@ theme:
   language: ja
   logo: 柔.png
   favicon: 柔.png
+  custom_dir: docs/overrides
   palette:
     - scheme: default
       primary: indigo
