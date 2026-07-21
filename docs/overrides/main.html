@@ -3,6 +3,15 @@
 {% block extrahead %}
   {{ super() }}
   <link rel="stylesheet" href="https://assets.asopi.tech/consent/v1/consent.css">
+  <style>
+    :root { --asopi-consent-accent: #3f51b5; --asopi-consent-font: "Roboto", system-ui, sans-serif; }
+    body[data-md-color-scheme="slate"] {
+      --asopi-consent-bg: #1e2129; --asopi-consent-fg: #e3e6eb; --asopi-consent-border: #3a3f4b;
+      --asopi-consent-accent: #7986cb; --asopi-consent-accent-contrast: #101418;
+      --asopi-consent-bg-dark: #1e2129; --asopi-consent-fg-dark: #e3e6eb; --asopi-consent-border-dark: #3a3f4b;
+      --asopi-consent-accent-dark: #7986cb; --asopi-consent-accent-contrast-dark: #101418;
+    }
+  </style>
   <script
     data-asopi-consent
     data-measurement-id="G-PY7Y5L3VJN"
